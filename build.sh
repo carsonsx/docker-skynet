@@ -17,13 +17,13 @@ docker run --name gcc-skynet -itd gcc
 docker cp $SFILE gcc-skynet:/$SFILE
 docker exec -it gcc-skynet sh $SFILE
 docker cp gcc-skynet:/skynet ./
-docker rm -f gcc-skynet
-rm -f $SFILE
 
 docker rm -f skynet
-docker rmi carsonsx/skynet
+docker rmi $1
 docker rmi -f $(docker images -f "dangling=true" -q)
-docker build -t carsonsx/skynet .
+docker build -t $1 .
 
-#docker run -itd --name skynet -p 8888:8888 carsonsx/skynet
-#docker logs -f skynet
+# clean
+docker rm -f gcc-skynet
+rm -rf skynet
+rm -f $SFILE
