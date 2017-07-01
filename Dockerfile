@@ -6,7 +6,7 @@ RUN git clone https://github.com/cloudwu/skynet.git
 
 RUN cd skynet
 
-RUN make
+RUN make linux
 
 ENTRYPOINT ["/skynet/skynet"]
 
