@@ -4,35 +4,23 @@ set -x
 set -o pipefail
 #
 # This script is meant for quick & easy run latest image via:
-#   'curl -sSL https://raw.githubusercontent.com/carsonsx/hfs/master/docker/run.sh | sh'
+#   'curl -sSL https://raw.githubusercontent.com/carsonsx/docker-skynet/master/run.sh | sh'
 # or:
-#   'wget -qO- https://raw.githubusercontent.com/carsonsx/hfs/master/docker/run.sh | sh'
+#   'wget -qO- https://raw.githubusercontent.com/carsonsx/docker-skynet/master/run.sh | sh'
 #
 
 # Download Dockerfile
-curl -sSLO "https://raw.githubusercontent.com/carsonsx/hfs/master/docker/Dockerfile"
+rm -f Dockerfile
+curl -sSLO "https://raw.githubusercontent.com/carsonsx/docker-skynet/master/Dockerfile"
 
 # Stop and remove image if exists
-result=`docker ps | grep hfs`
-if [ -n "$result" ]
-then
-	docker stop hfs
-fi
-result=`docker ps -a | grep hfs`
-if [ -n "$result" ]
-then
-	docker rm hfs
-fi
+docker rm -f carsonsx/skynet
+
+set -e
 
 # Build image
-result=`docker images | grep carsonsx/hfs`
-if [ -n "$result" ]
-then
-	docker rmi carsonsx/hfs
-fi
-docker build -t carsonsx/hfs .
-rm -rf Dockerfile
+docker build -t carsonsx/skynet .
 
 # Run
-docker run -itd --name hfs --restart=always -v ~/hfs/files:/files:rw -p 80:8011 carsonsx/hfs
-docker logs -f hfs
+docker run -itd --name skynet --restart=always -p 8888:8888 carsonsx/skynet
+docker logs -f skynet

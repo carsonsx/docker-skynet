@@ -2,37 +2,25 @@
 set -x
 #set -e
 set -o pipefail
+
 #
 # This script is meant for quick & easy build and push hfs image via:
-#   'curl -sSL https://raw.githubusercontent.com/carsonsx/hfs/master/docker/build.sh | sh'
+#   'curl -sSL https://raw.githubusercontent.com/carsonsx/docker-skynet/master/build.sh | sh'
 # or:
-#   'wget -qO- https://raw.githubusercontent.com/carsonsx/hfs/master/docker/build.sh | sh'
+#   'wget -qO- https://raw.githubusercontent.com/carsonsx/docker-skynet/master/build.sh | sh'
 #
 
 # Download Dockerfile
 rm -f Dockerfile
-curl -sSLO "https://raw.githubusercontent.com/carsonsx/hfs/master/docker/Dockerfile"
+curl -sSLO "https://raw.githubusercontent.com/carsonsx/docker-skynet/master/Dockerfile"
 
 # Stop and remove image if exists
-docker rm -f hfs
-
-mv -f hfs_linux_amd64 hfs
+docker rm -f carsonsx/skynet
 
 set -e
 
-#VERSION="$(git describe --tags --always)"
-VERSION="$(./hfs --getversion)"
+VERSION="1.0.0"
 
 # Build image
-docker build -t carsonsx/hfs .
-docker tag carsonsx/hfs carsonsx/hfs:${VERSION}
-
-# Push image
-# Please run docker login first
-docker push carsonsx/hfs
-docker push carsonsx/hfs:${VERSION}
-
-# Clean
-docker rmi carsonsx/hfs
-docker rmi carsonsx/hfs:${VERSION}
-rm -f Dockerfile hfs
+docker build -t carsonsx/skynet .
+docker tag carsonsx/skynet carsonsx/skynet:${VERSION}
