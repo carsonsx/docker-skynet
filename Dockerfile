@@ -1,13 +1,12 @@
-FROM gcc
+FROM debian
 
 MAINTAINER carsonsx <carsonsx@qq.com>
 
-RUN git clone https://github.com/cloudwu/skynet.git
+COPY skynet /skynet
 
-WORKDIR skynet
-
-RUN make linux
+WORKDIR /skynet
 
 ENTRYPOINT ["/skynet/skynet"]
+CMD ["examples/config"]
 
 EXPOSE 8888 8000 2013 2526

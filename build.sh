@@ -3,25 +3,27 @@ set -x
 #set -e
 set -o pipefail
 
-#
-# This script is meant for quick & easy build latest image via:
-#   'curl -sSL https://raw.githubusercontent.com/carsonsx/docker-skynet/master/build.sh | sh'
-# or:
-#   'wget -qO- https://raw.githubusercontent.com/carsonsx/docker-skynet/master/build.sh | sh'
-#
+SFILE=skynet.sh
 
-# Download Dockerfile
-rm -f Dockerfile
-curl -sSLO "https://raw.githubusercontent.com/carsonsx/docker-skynet/master/Dockerfile"
+cat >$SFILE <<EOL
+git clone https://github.com/cloudwu/skynet.git
+cd skynet
+make linux
+EOL
 
-# Stop and remove image if exists
+chmod a+x $SFILE
+
+docker run --name gcc-skynet -itd gcc
+docker cp $SFILE gcc-skynet:/$SFILE
+docker exec -it gcc-skynet sh $SFILE
+docker cp gcc-skynet:/skynet ./
+docker rm -f gcc-skynet
+rm -f $SFILE
+
 docker rm -f skynet
-
-# Remove image if exists
 docker rmi carsonsx/skynet
-
-# Remove none image
 docker rmi -f $(docker images -f "dangling=true" -q)
-
-# Build image
 docker build -t carsonsx/skynet .
+
+#docker run -itd --name skynet -p 8888:8888 carsonsx/skynet
+#docker logs -f skynet
