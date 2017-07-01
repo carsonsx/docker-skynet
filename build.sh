@@ -4,7 +4,7 @@ set -x
 set -o pipefail
 
 #
-# This script is meant for quick & easy build and push hfs image via:
+# This script is meant for quick & easy build latest image via:
 #   'curl -sSL https://raw.githubusercontent.com/carsonsx/docker-skynet/master/build.sh | sh'
 # or:
 #   'wget -qO- https://raw.githubusercontent.com/carsonsx/docker-skynet/master/build.sh | sh'
@@ -19,6 +19,9 @@ docker rm -f carsonsx/skynet
 
 # Remove image if exists
 docker rmi carsonsx/skynet
+
+# Remove none image
+docker rmi -f $(docker images -f "dangling=true" -q)
 
 # Build image
 docker build -t carsonsx/skynet .

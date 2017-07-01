@@ -2,6 +2,7 @@
 set -x
 #set -e
 set -o pipefail
+
 #
 # This script is meant for quick & easy run latest image via:
 #   'curl -sSL https://raw.githubusercontent.com/carsonsx/docker-skynet/master/run.sh | sh'
@@ -18,6 +19,9 @@ docker rm -f carsonsx/skynet
 
 # Remove image if exists
 docker rmi carsonsx/skynet
+
+# Remove none image
+docker rmi -f $(docker images -f "dangling=true" -q)
 
 set -e
 
