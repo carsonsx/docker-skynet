@@ -2,7 +2,7 @@ FROM gcc
 
 MAINTAINER carsonsx <carsonsx@qq.com>
 
-RUN git clone https://github.com/cloudwu/skynet.git
+RUN git clone -bmaster https://github.com/cloudwu/skynet.git
 
 RUN cd skynet
 
