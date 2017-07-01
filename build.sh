@@ -17,10 +17,8 @@ curl -sSLO "https://raw.githubusercontent.com/carsonsx/docker-skynet/master/Dock
 # Stop and remove image if exists
 docker rm -f carsonsx/skynet
 
-set -e
-
-VERSION="1.0.0"
+# Remove image if exists
+docker rmi carsonsx/skynet
 
 # Build image
 docker build -t carsonsx/skynet .
-docker tag carsonsx/skynet carsonsx/skynet:${VERSION}
