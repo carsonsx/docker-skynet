@@ -15,7 +15,7 @@ rm -f Dockerfile
 curl -sSLO "https://raw.githubusercontent.com/carsonsx/docker-skynet/master/Dockerfile"
 
 # Stop and remove image if exists
-docker rm -f carsonsx/skynet
+docker rm -f skynet
 
 # Remove image if exists
 docker rmi carsonsx/skynet
@@ -29,5 +29,6 @@ set -e
 docker build -t carsonsx/skynet .
 
 # Run
+
 docker run -itd --name skynet --restart=always -p 8888:8888 carsonsx/skynet examples/config
 docker logs -f skynet
