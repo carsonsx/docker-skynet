@@ -10,4 +10,4 @@ RUN make linux
 
 ENTRYPOINT ["/skynet/skynet"]
 
-EXPOSE 8888
+EXPOSE 8888 8000 2013 2526

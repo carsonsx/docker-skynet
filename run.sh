@@ -29,5 +29,5 @@ set -e
 docker build -t carsonsx/skynet .
 
 # Run
-docker run -itd --name skynet --restart=always -p 8888:8888 carsonsx/skynet
+docker run -itd --name skynet --restart=always -p 8888:8888 carsonsx/skynet examples/config
 docker logs -f skynet
